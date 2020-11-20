@@ -35,5 +35,26 @@ pca <- seeds %>%
   prcomp(scale. = TRUE)
 
 #create the summary of the pca to look at the variance 
-#PC1 shows the 71.87%
+#PC1 shows the 71.87% of the variance 
+#cumulatively the first three PCs account for 98.668% of the variance 
 summary(pca)
+
+#looking at the loadings of each of the PCs
+#each PC is a line on the axis and how the variables influence that line
+#negative values does not really make a difference - absolute size determines how important the variable is
+#PC1 = determined by area and perimeter the most
+#PC2 = determined by asymmetry_coef and compactness
+pca$rotation
+
+#extract the scores from pca using $x, the scores are stored in x
+#can put these into a dataframe
+pca_labelled <- data.frame(pca$x, species = seeds$species)
+
+#created a scatterplot for PC1 and PC2 
+ggplot(pca_labelled, aes(x = PC1, y = PC2, color = species)) +
+  geom_point()
+
+#do not do this, choose 1 and 2
+#PC6 and PC7 give results that are more overlapping and less distinct 
+#ggplot(pca_labelled, aes(x = PC6, y = PC7, color = species)) +
+  geom_point()
