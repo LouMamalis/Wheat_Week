@@ -57,4 +57,15 @@ ggplot(pca_labelled, aes(x = PC1, y = PC2, color = species)) +
 #do not do this, choose 1 and 2
 #PC6 and PC7 give results that are more overlapping and less distinct 
 #ggplot(pca_labelled, aes(x = PC6, y = PC7, color = species)) +
+  #geom_point()
+
+#comes up with different results each time
+tsne <- seeds %>% 
+  select(-species) %>%
+  Rtsne(perplexity = 20,
+        check_duplicates = FALSE)
+
+dat <- data.frame(tsne$Y,  species = seeds$species)
+
+dat %>% ggplot(aes(x = X1, y = X2, colour = species)) +
   geom_point()
